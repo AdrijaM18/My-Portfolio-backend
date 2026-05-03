@@ -35,9 +35,11 @@ MIDDLEWARE = [
 ]
 
 # ✅ Specific origins only — don't use CORS_ALLOW_ALL_ORIGINS=True in production
-CORS_ALLOWED_ORIGINS = [
-    "https://adrijas-frontend.vercel.app"
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://adrijas-frontend.vercel.app"
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'portfolio_backend.urls'
 
