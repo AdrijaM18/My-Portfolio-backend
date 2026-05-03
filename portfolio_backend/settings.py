@@ -36,7 +36,7 @@ MIDDLEWARE = [
 
 # ✅ Specific origins only — don't use CORS_ALLOW_ALL_ORIGINS=True in production
 CORS_ALLOWED_ORIGINS = [
-    "https://adrijas-frontend.vercel.app",
+    "https://ams-portfolio-backend.onrender.com",
     "http://localhost:5173",
 ]
 
