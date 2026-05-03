@@ -55,12 +55,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",
-#     "http://localhost:5173",  
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "https://adrijas-frontend.vercel.app",
+    "http://localhost:5173",  
+]
 
-ALLOWED_HOSTS = ['*'] 
+# ALLOWED_HOSTS = ['*'] 
 
 CORS_ALLOW_ALL_ORIGINS = True
 
