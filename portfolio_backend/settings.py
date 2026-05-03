@@ -35,10 +35,11 @@ MIDDLEWARE = [
 ]
 
 # ✅ Specific origins only — don't use CORS_ALLOW_ALL_ORIGINS=True in production
-CORS_ALLOWED_ORIGINS = [
-    "https://adrijas-frontend.vercel.app",
-    "http://localhost:5173",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://adrijas-frontend.vercel.app"
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'portfolio_backend.urls'
 
@@ -87,4 +88,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
