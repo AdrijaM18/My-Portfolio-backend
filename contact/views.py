@@ -45,6 +45,7 @@ class ContactView(APIView):
             return Response({'success': True}, status=status.HTTP_200_OK)
 
         except Exception as e:
+            print("EMAIL ERROR:", str(e))  
             return Response(
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
