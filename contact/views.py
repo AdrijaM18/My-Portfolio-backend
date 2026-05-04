@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
 from django.conf import settings
 import logging
+import smtplib  # ← ADD THIS
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +27,7 @@ class ContactView(APIView):
             from_email = settings.EMAIL_HOST_USER
             
             if not from_email:
-                logger.warning("EMAIL_HOST_USER not configured - returning success without sending email")
+                logger.warning("EMAIL_HOST_USER not configured")
                 return Response(
                     {'success': True, 'message': 'Message received (email pending configuration)'},
                     status=status.HTTP_200_OK
@@ -46,11 +47,10 @@ class ContactView(APIView):
                 subject='Thanks for contacting me!',
                 message=(
                     f'Hi {name},\n\n'
-                    'Thanks for reaching out. I’ve received your message and will get back to you soon.\n\n'
-                    'Here’s a copy of your message:\n\n'
+                    f'Thanks for reaching out. I have received your message and will get back to you soon.\n\n'
+                    f'Here is a copy of your message:\n\n'
                     f'{message}\n\n'
-                    'Best regards,\n'
-                    'Adrija'
+                    f'Best regards,\nAdrija'
                 ),
                 from_email=from_email,
                 recipient_list=[email],  
@@ -59,9 +59,17 @@ class ContactView(APIView):
 
             return Response({'success': True}, status=status.HTTP_200_OK)
 
+        except smtplib.SMTPAuthenticationError:
+            # ← CHANGED: was returning 500, now returns 503 + logs clearly
+            logger.error("Gmail authentication failed - check EMAIL_HOST_PASSWORD on Render")
+            return Response(
+                {'error': 'Email service misconfigured. Please email me directly.'},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
+
         except Exception as e:
             logger.error(f"EMAIL ERROR: {str(e)}", exc_info=True)
             return Response(
                 {'error': f'Failed to send message: {str(e)}'},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
             )
