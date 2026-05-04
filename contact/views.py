@@ -4,14 +4,13 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
 from django.conf import settings
+import logging
 
-from django.conf import settings
-
-
-from_email=settings.EMAIL_HOST_USER
+logger = logging.getLogger(__name__)
 
 class ContactView(APIView):
     permission_classes = [AllowAny]
+    
     def post(self, request):
         name = request.data.get('name', '').strip()
         email = request.data.get('email', '').strip()
@@ -24,6 +23,15 @@ class ContactView(APIView):
             )
 
         try:
+            from_email = settings.EMAIL_HOST_USER
+            
+            if not from_email:
+                logger.error("EMAIL_HOST_USER not configured")
+                return Response(
+                    {'error': 'Email service not configured on server'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+            
             # 1. Email to YOU (site owner)
             send_mail(
                 subject=f'Portfolio Contact from {name}',
@@ -52,11 +60,8 @@ class ContactView(APIView):
             return Response({'success': True}, status=status.HTTP_200_OK)
 
         except Exception as e:
-            import logging
-            logger = logging.getLogger(__name__)
-            logger.error(f"EMAIL ERROR: {str(e)}")
-            # Still return 200 so frontend gets CORS headers, but log the error
+            logger.error(f"EMAIL ERROR: {str(e)}", exc_info=True)
             return Response(
-                {'success': True, 'message': 'Message received (email delivery pending)'},
-                status=status.HTTP_200_OK
+                {'error': f'Failed to send message: {str(e)}'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
