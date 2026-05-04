@@ -35,11 +35,22 @@ MIDDLEWARE = [
 ]
 
 # ✅ Specific origins only — don't use CORS_ALLOW_ALL_ORIGINS=True in production
-# CORS_ALLOWED_ORIGINS = [
-#     "https://adrijas-frontend.vercel.app"
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "https://adrijas-frontend.vercel.app",
+]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "origin",
+    "x-csrftoken",
+    "x-requested-with",
+]
+
+CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_METHODS = ['GET', 'POST', 'OPTIONS']
 
 ROOT_URLCONF = 'portfolio_backend.urls'
 

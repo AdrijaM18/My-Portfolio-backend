@@ -5,7 +5,10 @@ from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
 from django.conf import settings
 
-from portfolio_backend.settings import EMAIL_HOST_USER
+from django.conf import settings
+
+
+from_email=settings.EMAIL_HOST_USER
 
 class ContactView(APIView):
     permission_classes = [AllowAny]
@@ -25,7 +28,7 @@ class ContactView(APIView):
             send_mail(
                 subject=f'Portfolio Contact from {name}',
                 message=f'Name: {name}\nEmail: {email}\n\nMessage:\n{message}',
-                from_email=email, 
+                from_email=from_email, 
                 recipient_list=['connectadrijam@gmail.com'],
                 fail_silently=False,
             )
@@ -41,7 +44,7 @@ class ContactView(APIView):
                     'Best regards,\n'
                     'Adrija'
                 ),
-                from_email=EMAIL_HOST_USER,
+                from_email=from_email,
                 recipient_list=[email],  
                 fail_silently=False,
             )
