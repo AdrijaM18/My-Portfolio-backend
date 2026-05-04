@@ -24,7 +24,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # ✅ must be first
+    'corsheaders.middleware.CorsMiddleware',  
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -34,19 +34,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ✅ Specific origins only — don't use CORS_ALLOW_ALL_ORIGINS=True in production
+from corsheaders.defaults import default_headers
+
 CORS_ALLOWED_ORIGINS = [
     "https://adrijas-frontend.vercel.app",
 ]
 
-CORS_ALLOW_HEADERS = [
-    "accept",
-    "accept-encoding",
-    "authorization",
+CORS_ALLOW_HEADERS = list(default_headers) + [
     "content-type",
-    "origin",
     "x-csrftoken",
-    "x-requested-with",
 ]
 
 CORS_ALLOW_HEADERS = ['*']
