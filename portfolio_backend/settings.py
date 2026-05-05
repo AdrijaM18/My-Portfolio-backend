@@ -37,8 +37,7 @@ MIDDLEWARE = [
 from corsheaders.defaults import default_headers
 
 CORS_ALLOWED_ORIGINS = [
-    # "https://adrijas-frontend.vercel.app",
-    "http://localhost:5173",
+    https://adrijas-portfolio-frontend.vercel.app/
 ]
 
 # CORS_ALOW_ALL_ORIGINS = True  # ← CHANGE THIS IN PRODUCTION TO ONLY ALLOW YOUR FRONTEND DOMAIN
