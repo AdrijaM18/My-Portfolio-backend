@@ -45,7 +45,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     "content-type",
-    "x-csrftoken",
+    "authorization",
 ]
 
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
